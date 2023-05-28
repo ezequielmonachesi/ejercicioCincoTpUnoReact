@@ -1,6 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import ListaTarea from "./ListaTarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FormularioTarea = () => {
   const [tarea, setTarea] = useState("");
@@ -8,8 +8,15 @@ const FormularioTarea = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setTareas([...tareas, tarea]);
+    localStorage.setItem('array', JSON.stringify([...tareas, tarea]));
     setTarea("");
   };
+  useEffect(()=>{
+    const datoLocalStorage = localStorage.getItem('array');
+    if(datoLocalStorage){
+      setTareas(JSON.parse(datoLocalStorage));
+    }
+  }, [])
   return (
     <>
       <Form onSubmit={handleSubmit}>
