@@ -3,12 +3,12 @@ import ListaTarea from "./ListaTarea";
 import { useEffect, useState } from "react";
 
 const FormularioTarea = () => {
+  let arraysTareas = JSON.parse(localStorage.getItem('array')) || [];
   const [tarea, setTarea] = useState("");
-  const [tareas, setTareas] = useState([]);
+  const [tareas, setTareas] = useState(arraysTareas);
   const handleSubmit = (e) => {
     e.preventDefault();
     setTareas([...tareas, tarea]);
-    localStorage.setItem('array', JSON.stringify([...tareas, tarea]));
     setTarea("");
   };
   const borrarTarea = (tarea) =>{
@@ -16,11 +16,8 @@ const FormularioTarea = () => {
     setTareas(copiaTareas);
   }
   useEffect(()=>{
-    const datoLocalStorage = localStorage.getItem('array');
-    if(datoLocalStorage){
-      setTareas(JSON.parse(datoLocalStorage));
-    }
-  }, [])
+    localStorage.setItem('array', JSON.stringify(tareas));
+  }, [tareas])
   return (
     <>
       <Form onSubmit={handleSubmit}>
