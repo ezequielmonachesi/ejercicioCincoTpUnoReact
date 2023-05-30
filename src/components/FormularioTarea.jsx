@@ -11,6 +11,10 @@ const FormularioTarea = () => {
     localStorage.setItem('array', JSON.stringify([...tareas, tarea]));
     setTarea("");
   };
+  const borrarTarea = (tarea) =>{
+    let copiaTareas = tareas.filter((itemTarea)=>itemTarea !== tarea);
+    setTareas(copiaTareas);
+  }
   useEffect(()=>{
     const datoLocalStorage = localStorage.getItem('array');
     if(datoLocalStorage){
@@ -32,7 +36,7 @@ const FormularioTarea = () => {
           </Button>
         </Form.Group>
       </Form>
-      <ListaTarea valor = {tareas}></ListaTarea>
+      <ListaTarea valor = {tareas} borrarTarea={borrarTarea}></ListaTarea>
     </>
   );
 };
